@@ -1,17 +1,18 @@
 [project]
 name = "del-academic-navigator"
 version = "0.1.0"
-description = "Add your description here"
+description = "Enterprise AI Copilot untuk Layanan Bimbingan Akademik dan Penjadwalan Ulang Kuliah Kampus IT Del"
 readme = "README.md"
 authors = [
-    { name = "Petra Ignatius Pengayoman Naibaho", email = "petranaibaho5@gmail.com" }
+    { name = "Petra Ignatius Pengayoman Naibaho", email = "petranaibaho5@gmail.com" },
+    { name = "Winda Sitorus", email = "windasitorus0197@gmail.com" },
+    { name = "Kezia Pasaribu", email = "kejiavania@gmail.com" }
 ]
 requires-python = ">=3.11"
-dependencies = []
-
-[project.scripts]
-del-academic-navigator = "del_academic_navigator:main"
+dependencies = [
+    "pytest>=8.0.0",
+]
 
 [build-system]
-requires = ["uv_build>=0.12.10,<0.13.0"]
-build-backend = "uv_build"
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
