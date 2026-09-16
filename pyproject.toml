@@ -3,11 +3,6 @@ name = "del-academic-navigator"
 version = "0.1.0"
 description = "Enterprise AI Copilot untuk Layanan Bimbingan Akademik dan Penjadwalan Ulang Kuliah Kampus IT Del"
 readme = "README.md"
-authors = [
-    { name = "Petra Ignatius Pengayoman Naibaho", email = "petranaibaho5@gmail.com" },
-    { name = "Winda Sitorus", email = "windasitorus0197@gmail.com" },
-    { name = "Kezia Pasaribu", email = "kejiavania@gmail.com" }
-]
 requires-python = ">=3.11"
 dependencies = [
     "pytest>=8.0.0",
