@@ -48,6 +48,7 @@ class TransitionEdge:
 
 class AcademicScheduleGraph:
     """
+<<<<<<< HEAD
     Representasi Graf Berarah dan Berbobot untuk Penjadwalan Akademik IT Del.
     
     Elemen Formulasi Formal:
@@ -115,6 +116,27 @@ class AcademicScheduleGraph:
         """
         Menambahkan edge transisi berarah antar-slot waktu beserta biaya penaltinya (Cost C).
         """
+=======
+    Representasi Graf Ruang Keadaan (State Space) Penjadwalan IT Del.
+    """
+
+    def __init__(self):
+        self.adj_list = {}
+        self.node_metadata = {}
+
+    def add_slot(self, node_id: str, hour: int, day: int = 1, room_name: str = "REGULER"):
+        """Menambahkan node slot waktu baru ke graf."""
+        if node_id not in self.adj_list:
+            self.adj_list[node_id] = []
+            self.node_metadata[node_id] = {
+                "hour": hour,
+                "day": day,
+                "room_name": room_name
+            }
+
+    def add_transition(self, from_node: str, to_node: str, cost: float):
+        """Menambahkan transisi antar-slot beserta bobot penalti (Cost C)."""
+>>>>>>> 77afe139507d40ad1ee212a629005427ee7d2fb1
         if from_node in self.adj_list and to_node in self.adj_list:
             self.adj_list[from_node].append((to_node, float(cost)))
             self.edges_detail[(from_node, to_node)] = TransitionEdge(
@@ -123,8 +145,13 @@ class AcademicScheduleGraph:
                 description=description,
             )
 
+<<<<<<< HEAD
     def get_neighbors(self, node: str) -> List[Tuple[str, float]]:
         """Mengembalikan daftar slot tetangga yang dapat dijangkau beserta bobotnya."""
+=======
+    def get_neighbors(self, node: str):
+        """Mengembalikan daftar tetangga yang terhubung."""
+>>>>>>> 77afe139507d40ad1ee212a629005427ee7d2fb1
         return self.adj_list.get(node, [])
 
     def calculate_real_cost(
@@ -152,6 +179,7 @@ class AcademicScheduleGraph:
 
     def heuristic(self, current_node: str, target_node: str) -> float:
         """
+<<<<<<< HEAD
         Fungsi Heuristik h(n) Admissible & Consistent (Monotonic):
         
         Formula:
@@ -234,3 +262,15 @@ def build_it_del_sample_graph() -> AcademicScheduleGraph:
     g.add_transition("Kamis_13:00_GD722", "Jumat_08:00_GD722", cost=cost_kamis2_jumat, description="Pindah hari Kamis siang ke Jumat")
 
     return g
+=======
+        Fungsi Heuristik h(n) Admissible:
+        Menghitung selisih waktu minimum menuju slot target.
+        """
+        if current_node not in self.node_metadata or target_node not in self.node_metadata:
+            return 0.0
+            
+        curr = self.node_metadata[current_node]
+        target = self.node_metadata[target_node]
+        
+        return float(abs(curr["hour"] - target["hour"]) + abs(curr["day"] - target["day"]))
+>>>>>>> 77afe139507d40ad1ee212a629005427ee7d2fb1

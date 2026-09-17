@@ -33,6 +33,7 @@ dependencies = [
 del-nav = "main:main"
 
 [build-system]
+<<<<<<< HEAD
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
@@ -44,3 +45,10 @@ minversion = "8.0"
 addopts = "-ra -q --import-mode=importlib"
 testpaths = ["tests"]
 pythonpath = [".", "src"]
+=======
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+>>>>>>> 77afe139507d40ad1ee212a629005427ee7d2fb1

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 Unit Test Suite untuk Del-Academic Navigator.
 
@@ -20,6 +21,18 @@ from src.search.conflict_resolver import (
     ScheduleState,
     ScheduleConflictResolver,
 )
+=======
+import sys
+from pathlib import Path
+
+# Baris ini agar Python tidak bingung mencari folder src
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+
+import pytest
+from del_academic_navigator.rules import calculate_room_cost
+from search.graph import AcademicScheduleGraph
+from search.scheduler import a_star_search
+>>>>>>> 77afe139507d40ad1ee212a629005427ee7d2fb1
 
 
 def test_a_star_pathfinding_success():
@@ -37,14 +50,20 @@ def test_a_star_pathfinding_success():
 def test_a_star_no_path():
     """Menguji kondisi graf terputus (goal unreachable) tidak menyebabkan crash."""
     graph = AcademicScheduleGraph()
+<<<<<<< HEAD
     graph.add_slot("Start", hour=8, room_id=1)
     graph.add_slot("Isolated", hour=10, room_id=1)
+=======
+    graph.add_slot("Start", 8, 1)
+    graph.add_slot("Isolated", 10, 1)
+>>>>>>> 77afe139507d40ad1ee212a629005427ee7d2fb1
 
     path, cost = a_star_search(graph, "Start", "Isolated")
     assert path is None
     assert cost == float("inf")
 
 
+<<<<<<< HEAD
 def test_ucs_pathfinding_success():
     """Menguji Uniform Cost Search berhasil menemukan jalur berbiaya termurah."""
     graph = AcademicScheduleGraph()
@@ -158,3 +177,25 @@ def test_schedule_conflict_resolution_goal_zero_conflicts():
     assert resolver.count_conflicts(final_state) == 0
     assert cost > 0.0
     assert len(history) > 0
+=======
+def test_a_star_sop_room_selection():
+    graph = AcademicScheduleGraph()
+    graph.add_slot("Start", 8, 1)
+    graph.add_slot("GD512", 10, 3, "GD512")
+    graph.add_slot("GD721", 10, 3, "GD721")
+    graph.add_slot("Goal", 12, 3)
+
+    cost_small = calculate_room_cost("GD512", 30)
+    cost_large = calculate_room_cost("GD721", 30)
+
+    graph.add_transition("Start", "GD512", cost_small)
+    graph.add_transition("GD512", "Goal", 1.0)
+
+    graph.add_transition("Start", "GD721", cost_large)
+    graph.add_transition("GD721", "Goal", 1.0)
+
+    path, cost = a_star_search(graph, "Start", "Goal")
+
+    assert path == ["Start", "GD512", "Goal"]
+    assert cost == 2.0
+>>>>>>> 77afe139507d40ad1ee212a629005427ee7d2fb1
