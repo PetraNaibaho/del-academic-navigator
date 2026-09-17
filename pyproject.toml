@@ -1,13 +1,46 @@
 [project]
 name = "del-academic-navigator"
 version = "0.1.0"
-description = "Enterprise AI Copilot untuk Layanan Bimbingan Akademik dan Penjadwalan Ulang Kuliah Kampus IT Del"
+description = "Enterprise AI Copilot untuk Layanan Bimbingan Akademik dan Penjadwalan Ulang Kuliah Kampus Institut Teknologi Del"
 readme = "README.md"
 requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "Tim Pengembang Del-Academic Navigator", email = "academic-navigator@del.ac.id" }
+]
+keywords = [
+    "artificial-intelligence",
+    "academic-scheduling",
+    "search-algorithms",
+    "a-star",
+    "uniform-cost-search",
+    "del-academic-navigator",
+    "institut-teknologi-del"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Intended Audience :: Education",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence"
+]
 dependencies = [
     "pytest>=8.0.0",
 ]
 
+[project.scripts]
+del-nav = "main:main"
+
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q --import-mode=importlib"
+testpaths = ["tests"]
+pythonpath = [".", "src"]
