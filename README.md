@@ -18,7 +18,7 @@
 
 ### Masalah Operasional (*Pain Points*)
 1. **Disrupsi Jadwal & Perkuliahan Pengganti (*Make-Up Class*):** Ketika dosen berhalangan hadir karena tugas riset atau kondisi darurat, pencarian waktu pengganti secara manual menimbulkan friksi jadwal yang tinggi bagi mahasiswa angkatan paralel.
-2. **Kesesuaian Kapasitas Ruangan:** Kelas paralel besar (misal gabungan 31SI1 & 31SI2 dengan total 65 mahasiswa) sering menghadapi kendala alokasi di ruangan reguler (GD512 kapasitas 40), sehingga wajib dialokasikan ke ruangan berkapasitas besar (GD721/GD722).
+2. **Kesesuaian Kapasitas Ruangan:** Kelas paralel besar (misal gabungan 31SI1 & 31SI2 dengan total 58 mahasiswa) sering menghadapi kendala alokasi di ruangan reguler (GD935 kapasitas 40), sehingga wajib dialokasikan ke ruangan berkapasitas besar (GD721/GD722).
 3. **Kepatuhan Terhadap SOP H-2:** SOP Akademik IT Del mewajibkan pengajuan jadwal pengganti minimal **H-2** agar tidak mendadak dan tidak berbentrok dengan kegiatan asrama.
 4. **Antrean Bimbingan Akademik (Dosen PA):** Kuota konsultasi dibatasi maksimal **5 mahasiswa per sesi** agar evaluasi KRS dan pemantauan indeks prestasi berjalan optimal.
 

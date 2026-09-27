@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 Main Entrypoint untuk Del-Academic Navigator.
 
@@ -49,9 +48,9 @@ def run_makeup_class_scenario():
     print("\n[SKENARIO 1: PENJADWALAN ULANG KULIAH (MAKE-UP CLASS)]")
     print("• Mata Kuliah : 10S3001 - Kecerdasan Buatan (+P)")
     print("• Dosen Pengampu: Samuel Indra Gunawan Situmeang")
-    print("• Peserta       : Kelas 31SI1 & 31SI2 (Total: 65 Mahasiswa)")
-    print("• Kasus         : Terjadi bentrok jadwal darurat pada slot Selasa 10:00 (GD512).")
-    print("• Regulasi SOP  : Pengajuan minimal H-2; Kelas > 40 mhs wajib di GD721/GD722.\n")
+    print("• Peserta       : Kelas 31SI1 & 31SI2 (Total: 58 Mahasiswa)")
+    print("• Kasus         : Terjadi bentrok jadwal darurat pada slot Selasa 10:00 (GD935).")
+    print("• Regulasi SOP  : Pengajuan minimal H-2; Kelas 58 mhs wajib di GD721/GD722.\n")
 
     graph = build_it_del_sample_graph()
     start_state = "Start_Slot"
@@ -79,7 +78,7 @@ def run_makeup_class_scenario():
     print(f"[OK] Total Penalti     : {a_star_result.total_cost} (Minimum / Solusi Optimal)")
     print("[OK] Validasi SOP Del  : Memenuhi syarat minimal H-2 (dilaksanakan Kamis/Jumat).")
     print("[OK] Validasi Fasilitas: Menggunakan GD721 (kapasitas 80) dan GD722 (kapasitas 75)")
-    print("                      sehingga 65 mahasiswa tertampung dengan aman.")
+    print("                      sehingga 58 mahasiswa tertampung dengan aman.")
     if a_star_result.nodes_explored <= ucs_result.nodes_explored:
         print(f"[OK] Efisiensi A*      : Heuristik h(n) memandu pencarian secara admissible,")
         print(f"                      mengeksplorasi {a_star_result.nodes_explored} node (<= UCS: {ucs_result.nodes_explored} node).")
@@ -94,7 +93,7 @@ def run_advising_session_scenario():
     print("=" * 80)
 
     advising_graph = AcademicScheduleGraph()
-    advising_graph.add_slot("Antrean_Mhs", hour=8, room_id="Lobby_Gd9", day="Senin", day_index=1, capacity=10)
+    advising_graph.add_slot("Antrean_Mhs", hour=8, room_id="GD914", day="Senin", day_index=1, capacity=10)
     advising_graph.add_slot("Sesi_1_Senin_09:00", hour=9, room_id="Ruang_Dosen_911", day="Senin", day_index=1, capacity=5)
     advising_graph.add_slot("Sesi_2_Senin_14:00", hour=14, room_id="Ruang_Dosen_911", day="Senin", day_index=1, capacity=5)
     advising_graph.add_slot("Sesi_3_Selasa_10:00", hour=10, room_id="Ruang_Dosen_911", day="Selasa", day_index=2, capacity=5)
@@ -112,20 +111,20 @@ def run_advising_session_scenario():
 def run_conflict_resolution_scenario():
     print("=" * 80)
     print("[SKENARIO 3: RESOLUSI BENTROK JADWAL MULTI-MATA KULIAH (GOAL: CONFLICT_COUNT == 0)]")
-    print("• Deskripsi Kasus : Mahasiswa kelas 31SI1 mengambil 2 matakuliah yang bentrok di slot awal.")
+    print("• Deskripsi Kasus : Mahasiswa 31SI1 & 31SI2 (58 Mahasiswa) mengambil 2 matakuliah yang bentrok.")
     print("• Mata Kuliah A   : 10S3001 - Kecerdasan Buatan (Dosen: Samuel Situmeang)")
     print("• Mata Kuliah B   : 10S3002 - Basis Data Lanjut (Dosen: Tim Pengampu BD)")
-    print("• Kondisi Awal    : Keduanya terjadwal di Senin 10:00 (GD512) -> Bentrok Mahasiswa & Ruang!")
+    print("• Kondisi Awal    : Keduanya terjadwal di Senin 10:00 (GD935 cap 40) -> Bentrok Mahasiswa & Overload!")
     print("=" * 80)
 
     courses = {
-        "10S3001": Course("10S3001", "Kecerdasan Buatan", "Samuel Situmeang", "31SI1", 40, "Senin", 10),
-        "10S3002": Course("10S3002", "Basis Data Lanjut", "Tim Pengampu BD", "31SI1", 40, "Senin", 10),
+        "10S3001": Course("10S3001", "Kecerdasan Buatan", "Samuel Situmeang", "31SI1_31SI2", 58, "Senin", 10),
+        "10S3002": Course("10S3002", "Basis Data Lanjut", "Tim Pengampu BD", "31SI1_31SI2", 58, "Senin", 10),
     }
 
-    slot_clash = Slot(day="Senin", hour=10, room_id="GD512", capacity=40)
-    slot_alt_1 = Slot(day="Senin", hour=13, room_id="GD512", capacity=40)
-    slot_alt_2 = Slot(day="Selasa", hour=10, room_id="GD721", capacity=80)
+    slot_clash = Slot(day="Senin", hour=10, room_id="GD935", capacity=40)
+    slot_alt_1 = Slot(day="Senin", hour=13, room_id="GD721", capacity=80)
+    slot_alt_2 = Slot(day="Selasa", hour=10, room_id="GD722", capacity=75)
 
     initial_state = ScheduleState(assignments={
         "10S3001": slot_clash,
@@ -151,21 +150,7 @@ def run_conflict_resolution_scenario():
         print(f"  * {c_code}: {s.day} {s.hour}:00 di {s.room_id} (Kapasitas: {s.capacity})")
     print()
 
-=======
-import sys
-from pathlib import Path
-
-# Baris ini memastikan folder src terbaca langsung oleh Python
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-
-from del_academic_navigator.rules import calculate_room_cost, is_lead_time_valid
-from search.graph import AcademicScheduleGraph
-from search.scheduler import a_star_search
->>>>>>> 77afe139507d40ad1ee212a629005427ee7d2fb1
-
-
 def main():
-<<<<<<< HEAD
     print_banner()
     run_makeup_class_scenario()
     run_advising_session_scenario()
@@ -174,64 +159,6 @@ def main():
     print("Milestone 1 Terpenuhi: State Space Search teruji bebas bug & siap untuk Milestone 2.")
     print("=" * 80)
 
-=======
-    print("==========================================================")
-    print("   DEL-ACADEMIC NAVIGATOR: BASELINE A* SEARCH SCHEDULER   ")
-    print("==========================================================")
-
-    # Parameter Pengajuan (Kasus Nyata IT Del)
-    request_day = 1       # Diajukan hari Senin (Day 1)
-    target_day = 3        # Rencana kuliah pengganti hari Rabu (Day 3)
-    student_count = 32    # Jumlah rombel kelas (32 mahasiswa)
-
-    print(f"Hari Pengajuan   : Hari ke-{request_day} (Senin)")
-    print(f"Target Jadwal    : Hari ke-{target_day} (Rabu)")
-    print(f"Jumlah Mahasiswa : {student_count} orang")
-    print("----------------------------------------------------------")
-
-    # 1. Validasi Batasan SOP H-2
-    if not is_lead_time_valid(request_day, target_day):
-        print("Status: DITOLAK.")
-        print("Alasan: Melanggar SOP IT Del (pengajuan pengganti wajib minimal H-2).")
-        return
-
-    # 2. Inisialisasi Graf Ruang Keadaan
-    graph = AcademicScheduleGraph()
-
-    # Daftarkan slot awal, opsi-opsi slot ruang, dan slot selesai (Goal)
-    graph.add_slot("Start_Slot", hour=8, day=request_day)
-    graph.add_slot("Rabu_13:00_GD512", hour=13, day=target_day, room_name="GD512")
-    graph.add_slot("Rabu_10:00_GD721", hour=10, day=target_day, room_name="GD721")  # Ruang besar
-    graph.add_slot("Rabu_Goal", hour=15, day=target_day)
-
-    # 3. Hitung Biaya Penalti Riil Berdasarkan Aturan SOP
-    cost_gd512 = calculate_room_cost("GD512", student_count)
-    cost_gd721 = calculate_room_cost("GD721", student_count)
-
-    # Hubungkan jalur perpindahan slot
-    graph.add_transition("Start_Slot", "Rabu_13:00_GD512", cost=cost_gd512)
-    graph.add_transition("Rabu_13:00_GD512", "Rabu_Goal", cost=1.0)
-
-    graph.add_transition("Start_Slot", "Rabu_10:00_GD721", cost=cost_gd721)
-    graph.add_transition("Rabu_10:00_GD721", "Rabu_Goal", cost=1.0)
-
-    # 4. Jalankan Algoritma Pencarian A*
-    path, total_cost = a_star_search(graph, "Start_Slot", "Rabu_Goal")
-
-    # 5. Tampilkan Keputusan AI
-    if path:
-        print("Status           : BERHASIL DITEMUKAN")
-        print(f"Jalur Rekomendasi: {' -> '.join(path)}")
-        print(f"Total Biaya/Cost : {total_cost}")
-        print("----------------------------------------------------------")
-        print("Analisis Keputusan AI:")
-        print("- Sistem otomatis memilih GD512 karena peserta <= 40 mahasiswa.")
-        print("- GD721 dihindari karena terkena penalti pemborosan ruang besar.")
-    else:
-        print("Status: Jadwal bentrok atau tidak ditemukan alur yang valid.")
-    print("==========================================================")
-
->>>>>>> 77afe139507d40ad1ee212a629005427ee7d2fb1
 
 if __name__ == "__main__":
     main()

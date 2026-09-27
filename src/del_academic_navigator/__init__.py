@@ -1,10 +1,15 @@
 """
-Del-Academic Navigator: Enterprise AI Copilot untuk Layanan Bimbingan Akademik
-dan Penjadwalan Ulang Kuliah Kampus Institut Teknologi Del.
+Package del_academic_navigator.
+
+Modul utama Enterprise AI Copilot Layanan Bimbingan Akademik dan Penjadwalan Ulang Kampus IT Del.
 """
 
-__version__ = "0.1.0"
+from .rooms import IT_DEL_ROOMS, ROOMS_BY_ID, RoomInfo, filter_valid_rooms_for_capacity, get_room_info
 
-from src.main import main
-
-__all__ = ["__version__", "main"]
+__all__ = [
+    "IT_DEL_ROOMS",
+    "ROOMS_BY_ID",
+    "RoomInfo",
+    "get_room_info",
+    "filter_valid_rooms_for_capacity",
+]

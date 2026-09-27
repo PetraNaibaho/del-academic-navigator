@@ -48,7 +48,6 @@ class TransitionEdge:
 
 class AcademicScheduleGraph:
     """
-<<<<<<< HEAD
     Representasi Graf Berarah dan Berbobot untuk Penjadwalan Akademik IT Del.
     
     Elemen Formulasi Formal:
@@ -116,27 +115,6 @@ class AcademicScheduleGraph:
         """
         Menambahkan edge transisi berarah antar-slot waktu beserta biaya penaltinya (Cost C).
         """
-=======
-    Representasi Graf Ruang Keadaan (State Space) Penjadwalan IT Del.
-    """
-
-    def __init__(self):
-        self.adj_list = {}
-        self.node_metadata = {}
-
-    def add_slot(self, node_id: str, hour: int, day: int = 1, room_name: str = "REGULER"):
-        """Menambahkan node slot waktu baru ke graf."""
-        if node_id not in self.adj_list:
-            self.adj_list[node_id] = []
-            self.node_metadata[node_id] = {
-                "hour": hour,
-                "day": day,
-                "room_name": room_name
-            }
-
-    def add_transition(self, from_node: str, to_node: str, cost: float):
-        """Menambahkan transisi antar-slot beserta bobot penalti (Cost C)."""
->>>>>>> 77afe139507d40ad1ee212a629005427ee7d2fb1
         if from_node in self.adj_list and to_node in self.adj_list:
             self.adj_list[from_node].append((to_node, float(cost)))
             self.edges_detail[(from_node, to_node)] = TransitionEdge(
@@ -145,13 +123,8 @@ class AcademicScheduleGraph:
                 description=description,
             )
 
-<<<<<<< HEAD
     def get_neighbors(self, node: str) -> List[Tuple[str, float]]:
         """Mengembalikan daftar slot tetangga yang dapat dijangkau beserta bobotnya."""
-=======
-    def get_neighbors(self, node: str):
-        """Mengembalikan daftar tetangga yang terhubung."""
->>>>>>> 77afe139507d40ad1ee212a629005427ee7d2fb1
         return self.adj_list.get(node, [])
 
     def calculate_real_cost(
@@ -179,7 +152,6 @@ class AcademicScheduleGraph:
 
     def heuristic(self, current_node: str, target_node: str) -> float:
         """
-<<<<<<< HEAD
         Fungsi Heuristik h(n) Admissible & Consistent (Monotonic):
         
         Formula:
@@ -212,18 +184,18 @@ def build_it_del_sample_graph() -> AcademicScheduleGraph:
     Membangun graf simulasi jadwal perkuliahan riil di Institut Teknologi Del.
     
     Kasus Bisnis:
-    Mata kuliah '10S3001 - Kecerdasan Buatan (+P)' kelas gabungan (65 mahasiswa)
-    semula terjadwal pada Selasa 10:00 di GD512 (Kapasitas 40, terjadi overload/bentrok).
+    Mata kuliah '10S3001 - Kecerdasan Buatan (+P)' kelas gabungan (58 mahasiswa)
+    semula terjadwal pada Selasa 10:00 di GD935 (Kapasitas 40, terjadi overload/bentrok).
     Sistem mengevaluasi opsi pemindahan kuliah pengganti (make-up class) ke slot nir-bentrok
-    sesuai SOP H-2 dan kapasitas ruangan besar (GD721/GD722 kapasitas 70-80).
+    sesuai SOP H-2 dan kapasitas ruangan besar (GD721/GD722 kapasitas 75-80).
     """
     g = AcademicScheduleGraph()
 
-    # Slot Awal & Slot Alternatif
-    g.add_slot("Start_Slot", hour=10, room_id="GD512", day="Selasa", day_index=2, capacity=40, building="Gedung 5")
+    # Slot Awal & Slot Alternatif (Kapasitas disesuaikan dengan dataset 46 ruangan IT Del)
+    g.add_slot("Start_Slot", hour=10, room_id="GD935", day="Selasa", day_index=2, capacity=40, building="Gedung 9")
     
     # Hari Rabu (H+1) - Melanggar aturan ideal H-2 SOP, penalti tinggi
-    g.add_slot("Rabu_08:00_GD512", hour=8, room_id="GD512", day="Rabu", day_index=3, capacity=40, building="Gedung 5")
+    g.add_slot("Rabu_08:00_GD935", hour=8, room_id="GD935", day="Rabu", day_index=3, capacity=40, building="Gedung 9")
     g.add_slot("Rabu_10:00_GD721", hour=10, room_id="GD721", day="Rabu", day_index=3, capacity=80, building="Gedung 7")
     
     # Hari Kamis (H+2) - Sesuai SOP minimal H-2
@@ -235,8 +207,8 @@ def build_it_del_sample_graph() -> AcademicScheduleGraph:
 
     # Transisi dan Bobot Biaya Penalti Riil (Cost C) berbasis calculate_real_cost
     # Start -> Opsi Hari Rabu
-    cost_start_rabu1 = g.calculate_real_cost("Start_Slot", "Rabu_08:00_GD512") + 1.0  # +1.0 Penalti H+1 mepet SOP
-    g.add_transition("Start_Slot", "Rabu_08:00_GD512", cost=cost_start_rabu1, description="H+1 (Terlalu mepet SOP) & Kapasitas sempit")
+    cost_start_rabu1 = g.calculate_real_cost("Start_Slot", "Rabu_08:00_GD935") + 1.0  # +1.0 Penalti H+1 mepet SOP
+    g.add_transition("Start_Slot", "Rabu_08:00_GD935", cost=cost_start_rabu1, description="H+1 (Terlalu mepet SOP) & Kapasitas sempit")
     
     cost_start_rabu2 = g.calculate_real_cost("Start_Slot", "Rabu_10:00_GD721")
     g.add_transition("Start_Slot", "Rabu_10:00_GD721", cost=cost_start_rabu2, description="H+1 tapi ruangan GD721 memadai")
@@ -249,8 +221,8 @@ def build_it_del_sample_graph() -> AcademicScheduleGraph:
     g.add_transition("Start_Slot", "Kamis_13:00_GD722", cost=cost_start_kamis2, description="H+2 Sesuai SOP H-2, jam siang, GD722 luas")
     
     # Transisi ke Goal State Jumat_08:00_GD722
-    cost_rabu1_jumat = g.calculate_real_cost("Rabu_08:00_GD512", "Jumat_08:00_GD722")
-    g.add_transition("Rabu_08:00_GD512", "Jumat_08:00_GD722", cost=cost_rabu1_jumat, description="Pindah hari Rabu ke Jumat")
+    cost_rabu1_jumat = g.calculate_real_cost("Rabu_08:00_GD935", "Jumat_08:00_GD722")
+    g.add_transition("Rabu_08:00_GD935", "Jumat_08:00_GD722", cost=cost_rabu1_jumat, description="Pindah hari Rabu ke Jumat")
     
     cost_rabu2_jumat = g.calculate_real_cost("Rabu_10:00_GD721", "Jumat_08:00_GD722")
     g.add_transition("Rabu_10:00_GD721", "Jumat_08:00_GD722", cost=cost_rabu2_jumat, description="Pindah hari Rabu ke Jumat")
@@ -262,15 +234,3 @@ def build_it_del_sample_graph() -> AcademicScheduleGraph:
     g.add_transition("Kamis_13:00_GD722", "Jumat_08:00_GD722", cost=cost_kamis2_jumat, description="Pindah hari Kamis siang ke Jumat")
 
     return g
-=======
-        Fungsi Heuristik h(n) Admissible:
-        Menghitung selisih waktu minimum menuju slot target.
-        """
-        if current_node not in self.node_metadata or target_node not in self.node_metadata:
-            return 0.0
-            
-        curr = self.node_metadata[current_node]
-        target = self.node_metadata[target_node]
-        
-        return float(abs(curr["hour"] - target["hour"]) + abs(curr["day"] - target["day"]))
->>>>>>> 77afe139507d40ad1ee212a629005427ee7d2fb1
