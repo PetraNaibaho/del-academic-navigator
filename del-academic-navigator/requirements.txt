@@ -1,0 +1,4 @@
+# Del-Academic Navigator - Dependencies
+# Managed via Astral uv (pyproject.toml)
+
+pytest>=8.0.0
