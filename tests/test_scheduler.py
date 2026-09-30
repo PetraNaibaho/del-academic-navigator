@@ -73,7 +73,12 @@ def test_ucs_vs_a_star_optimality():
     assert ucs_result.path is not None
     assert astar_result.path is not None
     assert ucs_result.total_cost == astar_result.total_cost
-    assert astar_result.total_cost == pytest.approx(20.0)
+    assert astar_result.total_cost == pytest.approx(21.0)
+    for node in astar_result.path[1:]:
+        slot = graph.slots[node]
+        assert slot.day_index >= 4
+        assert slot.capacity >= 58
+        assert slot.room_id in {"GD721", "GD722"}
 
 
 def test_a_star_exploration_efficiency():
@@ -158,3 +163,22 @@ def test_schedule_conflict_resolution_goal_zero_conflicts():
     assert resolver.count_conflicts(final_state) == 0
     assert cost > 0.0
     assert len(history) > 0
+
+
+def test_schedule_conflict_resolution_requires_capacity_and_large_class_rooms():
+    courses = {
+        "10S3001": Course(
+            "10S3001", "Kecerdasan Buatan", "Samuel", "31SI1_31SI2", 58, "Senin", 10
+        ),
+    }
+    undersized_room = Slot("Senin", 10, "GD935", 40)
+    valid_large_room = Slot("Kamis", 10, "GD721", 80)
+    initial_state = ScheduleState(assignments={"10S3001": undersized_room})
+    resolver = ScheduleConflictResolver(courses, [undersized_room, valid_large_room])
+
+    assert resolver.goal_test(initial_state) is False
+    final_state, _, _, _ = resolver.solve(initial_state)
+
+    assert final_state is not None
+    assert final_state.assignments["10S3001"] == valid_large_room
+    assert resolver.goal_test(final_state) is True

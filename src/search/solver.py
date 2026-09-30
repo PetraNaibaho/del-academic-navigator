@@ -11,9 +11,9 @@ Mengimplementasikan:
    - Forward Checking (FC) / Inference saat pencarian
 """
 
-from dataclasses import dataclass, field
+from collections import deque
+from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple
-import copy
 import time
 
 
@@ -43,6 +43,8 @@ class BinaryConstraint:
         relation: Callable[[Any, Any], bool],
         name: str = "BinaryConstraint",
     ):
+        if not callable(relation):
+            raise TypeError("Constraint relation must be callable.")
         self.var1 = var1
         self.var2 = var2
         self.relation = relation
@@ -71,33 +73,48 @@ class CSPSolver:
         variables: List[str],
         domains: Dict[str, List[Any]],
     ):
+        if len(set(variables)) != len(variables):
+            raise ValueError("CSP variables must be unique.")
+        if set(domains) != set(variables):
+            missing = set(variables) - set(domains)
+            unexpected = set(domains) - set(variables)
+            raise ValueError(
+                f"Domain keys must match variables exactly "
+                f"(missing={sorted(missing)}, unexpected={sorted(unexpected)})."
+            )
+
         self.variables: List[str] = list(variables)
         self.domains: Dict[str, List[Any]] = {
             v: list(domains[v]) for v in variables
         }
         self.constraints: List[BinaryConstraint] = []
         self.neighbors: Dict[str, Set[str]] = {v: set() for v in variables}
+        self._constraints_by_pair: Dict[frozenset[str], List[BinaryConstraint]] = {}
 
     def add_constraint(self, constraint: BinaryConstraint) -> None:
         """Menambahkan batasan biner ke dalam masalah CSP."""
+        if constraint.var1 == constraint.var2:
+            raise ValueError("Binary constraints must connect two distinct variables.")
+        unknown = {constraint.var1, constraint.var2} - set(self.variables)
+        if unknown:
+            raise ValueError(f"Constraint references unknown variables: {sorted(unknown)}.")
+
         self.constraints.append(constraint)
         self.neighbors[constraint.var1].add(constraint.var2)
         self.neighbors[constraint.var2].add(constraint.var1)
+        pair = frozenset((constraint.var1, constraint.var2))
+        self._constraints_by_pair.setdefault(pair, []).append(constraint)
 
     def get_constraints_between(self, var1: str, var2: str) -> List[BinaryConstraint]:
         """Mengembalikan daftar batasan biner antara var1 dan var2."""
-        res = []
-        for c in self.constraints:
-            if (c.var1 == var1 and c.var2 == var2) or (c.var1 == var2 and c.var2 == var1):
-                res.append(c)
-        return res
+        return list(self._constraints_by_pair.get(frozenset((var1, var2)), ()))
 
     def is_consistent_pair(self, var1: str, val1: Any, var2: str, val2: Any) -> bool:
         """
         Memeriksa apakah penugasan val1 pada var1 dan val2 pada var2 konsisten
         terhadap seluruh batasan antara var1 dan var2.
         """
-        for c in self.constraints:
+        for c in self.get_constraints_between(var1, var2):
             if c.var1 == var1 and c.var2 == var2:
                 if not c.is_satisfied(val1, val2):
                     return False
@@ -150,18 +167,27 @@ class CSPSolver:
         if current_domains is None:
             domains_copy = {v: list(self.domains[v]) for v in self.variables}
         else:
+            if set(current_domains) != set(self.variables):
+                raise ValueError("Current domain keys must match CSP variables exactly.")
             domains_copy = {v: list(current_domains[v]) for v in self.variables}
 
+        if any(not domain for domain in domains_copy.values()):
+            return False, domains_copy, 0
+
         # Inisialisasi antrean queue dengan seluruh busur berarah (Xi, Xj)
-        queue: List[Tuple[str, str]] = []
+        queue = deque()
+        queued: Set[Tuple[str, str]] = set()
         for c in self.constraints:
-            queue.append((c.var1, c.var2))
-            queue.append((c.var2, c.var1))
+            for arc in ((c.var1, c.var2), (c.var2, c.var1)):
+                if arc not in queued:
+                    queue.append(arc)
+                    queued.add(arc)
 
         total_prunings = 0
 
         while queue:
-            xi, xj = queue.pop(0)
+            xi, xj = queue.popleft()
+            queued.remove((xi, xj))
             revised, pruned = self.revise(xi, xj, domains_copy)
             total_prunings += pruned
 
@@ -173,8 +199,9 @@ class CSPSolver:
                 # Masukkan kembali seluruh busur tetangga Xk -> Xi (k != j)
                 for xk in self.neighbors[xi]:
                     if xk != xj:
-                        if (xk, xi) not in queue:
+                        if (xk, xi) not in queued:
                             queue.append((xk, xi))
+                            queued.add((xk, xi))
 
         return True, domains_copy, total_prunings
 

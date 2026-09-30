@@ -194,10 +194,6 @@ def build_it_del_sample_graph() -> AcademicScheduleGraph:
     # Slot Awal & Slot Alternatif (Kapasitas disesuaikan dengan dataset 46 ruangan IT Del)
     g.add_slot("Start_Slot", hour=10, room_id="GD935", day="Selasa", day_index=2, capacity=40, building="Gedung 9")
     
-    # Hari Rabu (H+1) - Melanggar aturan ideal H-2 SOP, penalti tinggi
-    g.add_slot("Rabu_08:00_GD935", hour=8, room_id="GD935", day="Rabu", day_index=3, capacity=40, building="Gedung 9")
-    g.add_slot("Rabu_10:00_GD721", hour=10, room_id="GD721", day="Rabu", day_index=3, capacity=80, building="Gedung 7")
-    
     # Hari Kamis (H+2) - Sesuai SOP minimal H-2
     g.add_slot("Kamis_10:00_GD721", hour=10, room_id="GD721", day="Kamis", day_index=4, capacity=80, building="Gedung 7")
     g.add_slot("Kamis_13:00_GD722", hour=13, room_id="GD722", day="Kamis", day_index=4, capacity=75, building="Gedung 7")
@@ -205,15 +201,8 @@ def build_it_del_sample_graph() -> AcademicScheduleGraph:
     # Hari Jumat (H+3) - Goal Slot Ideal yang telah disetujui BAAK
     g.add_slot("Jumat_08:00_GD722", hour=8, room_id="GD722", day="Jumat", day_index=5, capacity=75, building="Gedung 7")
 
-    # Transisi dan Bobot Biaya Penalti Riil (Cost C) berbasis calculate_real_cost
-    # Start -> Opsi Hari Rabu
-    cost_start_rabu1 = g.calculate_real_cost("Start_Slot", "Rabu_08:00_GD935") + 1.0  # +1.0 Penalti H+1 mepet SOP
-    g.add_transition("Start_Slot", "Rabu_08:00_GD935", cost=cost_start_rabu1, description="H+1 (Terlalu mepet SOP) & Kapasitas sempit")
-    
-    cost_start_rabu2 = g.calculate_real_cost("Start_Slot", "Rabu_10:00_GD721")
-    g.add_transition("Start_Slot", "Rabu_10:00_GD721", cost=cost_start_rabu2, description="H+1 tapi ruangan GD721 memadai")
-    
-    # Start -> Opsi Hari Kamis (Sesuai SOP H-2)
+    # Transisi hanya dibuat untuk slot yang memenuhi H-2 dan kapasitas kelas.
+    # Start -> Opsi Hari Kamis (Sesuai SOP H-2, kapasitas cukup)
     cost_start_kamis1 = g.calculate_real_cost("Start_Slot", "Kamis_10:00_GD721")
     g.add_transition("Start_Slot", "Kamis_10:00_GD721", cost=cost_start_kamis1, description="H+2 Sesuai SOP H-2, jam sama (10:00), GD721 luas")
     
@@ -221,12 +210,6 @@ def build_it_del_sample_graph() -> AcademicScheduleGraph:
     g.add_transition("Start_Slot", "Kamis_13:00_GD722", cost=cost_start_kamis2, description="H+2 Sesuai SOP H-2, jam siang, GD722 luas")
     
     # Transisi ke Goal State Jumat_08:00_GD722
-    cost_rabu1_jumat = g.calculate_real_cost("Rabu_08:00_GD935", "Jumat_08:00_GD722")
-    g.add_transition("Rabu_08:00_GD935", "Jumat_08:00_GD722", cost=cost_rabu1_jumat, description="Pindah hari Rabu ke Jumat")
-    
-    cost_rabu2_jumat = g.calculate_real_cost("Rabu_10:00_GD721", "Jumat_08:00_GD722")
-    g.add_transition("Rabu_10:00_GD721", "Jumat_08:00_GD722", cost=cost_rabu2_jumat, description="Pindah hari Rabu ke Jumat")
-    
     cost_kamis1_jumat = g.calculate_real_cost("Kamis_10:00_GD721", "Jumat_08:00_GD722")
     g.add_transition("Kamis_10:00_GD721", "Jumat_08:00_GD722", cost=cost_kamis1_jumat, description="Pindah hari Kamis ke Jumat (Jalur Optimal)")
     

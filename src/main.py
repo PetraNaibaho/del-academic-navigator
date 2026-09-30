@@ -35,6 +35,12 @@ from src.search.conflict_resolver import (
     ScheduleState,
     ScheduleConflictResolver,
 )
+from src.search.solver import CSPSolutionResult
+from src.del_academic_navigator.csp_schedule import (
+    ScheduleCourse,
+    ScheduleSlot,
+    build_academic_schedule_csp,
+)
 
 
 def print_banner():
@@ -150,13 +156,61 @@ def run_conflict_resolution_scenario():
         print(f"  * {c_code}: {s.day} {s.hour}:00 di {s.room_id} (Kapasitas: {s.capacity})")
     print()
 
+
+def run_csp_scheduling_scenario():
+    print("=" * 80)
+    print("[SKENARIO 4: CSP PENJADWALAN AKADEMIK (AC-3 + BACKTRACKING)]")
+    print("• Variabel       : Mata kuliah yang harus dijadwalkan")
+    print("• Domain         : Slot valid setelah filter H-2, kapasitas, jam, dan jenis ruang")
+    print("• Batasan keras  : Dosen, cohort mahasiswa, dan ruang tidak boleh bentrok")
+    print("=" * 80)
+
+    courses = [
+        ScheduleCourse("10S3001", "Samuel Situmeang", ("31SI1", "31SI2"), 58),
+        ScheduleCourse("10S3002", "Indra Simanjuntak", ("31SI1", "31SI2"), 58),
+        ScheduleCourse("10S3003", "Samuel Situmeang", ("31SI1",), 30, requires_lab=True),
+    ]
+    slots = [
+        ScheduleSlot("Senin", 10, 2, "GD935", 40, day_offset=1),
+        ScheduleSlot("Selasa", 8, 2, "GD721", 80),
+        ScheduleSlot("Selasa", 8, 2, "GD722", 75),
+        ScheduleSlot("Selasa", 10, 2, "GD911", 60, is_lab=True),
+        ScheduleSlot("Selasa", 13, 2, "GD512", 40),
+        ScheduleSlot("Rabu", 10, 2, "GD722", 75),
+    ]
+
+    solver = build_academic_schedule_csp(courses, slots)
+    result: CSPSolutionResult = solver.solve()
+    if not result.is_satisfied or result.assignment is None:
+        print("[GAGAL] Tidak ditemukan jadwal yang memenuhi seluruh batasan keras.")
+        print(
+            f"Nodes={result.nodes_explored}, backtracks={result.backtracks}, "
+            f"prunings={result.domain_prunings}, "
+            f"time={result.execution_time_ms:.3f} ms"
+        )
+        return
+
+    for course in courses:
+        slot = result.assignment[course.course_id]
+        print(
+            f"  {course.course_id}: {slot.day} {slot.start_hour:02}:00, "
+            f"{slot.room_id} (kapasitas {slot.room_capacity})"
+        )
+    print(
+        f"[OK] Jadwal layak; nodes={result.nodes_explored}, "
+        f"backtracks={result.backtracks}, prunings={result.domain_prunings}, "
+        f"time={result.execution_time_ms:.3f} ms"
+    )
+
+
 def main():
     print_banner()
     run_makeup_class_scenario()
     run_advising_session_scenario()
     run_conflict_resolution_scenario()
+    run_csp_scheduling_scenario()
     print("=" * 80)
-    print("Milestone 1 Terpenuhi: State Space Search teruji bebas bug & siap untuk Milestone 2.")
+    print("Milestone 1 & 2: State-Space Search dan CSP telah didemonstrasikan.")
     print("=" * 80)
 
 

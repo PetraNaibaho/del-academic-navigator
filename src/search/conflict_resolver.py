@@ -55,6 +55,18 @@ class ScheduleState:
         conflicts = []
         course_codes = list(self.assignments.keys())
 
+        for course_code, slot in self.assignments.items():
+            course = courses[course_code]
+            if slot.capacity < course.capacity_needed:
+                conflicts.append(
+                    f"Kapasitas {slot.room_id} tidak cukup untuk {course_code} "
+                    f"({slot.capacity} < {course.capacity_needed})"
+                )
+            if course.capacity_needed > 40 and slot.room_id not in {"GD721", "GD722"}:
+                conflicts.append(
+                    f"Kelas besar {course_code} wajib memakai GD721/GD722"
+                )
+
         for i in range(len(course_codes)):
             for j in range(i + 1, len(course_codes)):
                 c1 = course_codes[i]
@@ -166,6 +178,8 @@ class ScheduleConflictResolver:
                     continue
                 # Cek kapasitas ruangan
                 if slot.capacity < course.capacity_needed:
+                    continue
+                if course.capacity_needed > 40 and slot.room_id not in {"GD721", "GD722"}:
                     continue
 
                 cost = calculate_move_cost(course, curr_slot, slot)

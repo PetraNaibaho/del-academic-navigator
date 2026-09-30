@@ -133,18 +133,22 @@ del-academic-navigator/
 ├── uv.lock                     # Lockfile dependensi Astral uv
 ├── docs/
 │   ├── SOP_Akademik_ITDel.md   # Standar Operasional Prosedur Akademik IT Del
-│   └── GrupXX_Tugas01_Problem_Framing_PEAS.md # Laporan komprehensif serahan Tugas 1
+│   ├── GrupXX_Tugas01_Problem_Framing_PEAS.md # Laporan komprehensif serahan Tugas 1
+│   └── T02_Milestone2_CSP_Solver.md # Formulasi CSP, algoritma, pengujian, rubrik
 ├── src/
 │   ├── __init__.py
 │   ├── main.py                 # Eksekusi skenario bisnis dan CLI benchmark
 │   ├── del_academic_navigator/
-│   │   └── __init__.py         # Package init & versioning
+│   │   ├── __init__.py         # Package init & versioning
+│   │   └── csp_schedule.py     # Model constraint bisnis penjadwalan kuliah
 │   └── search/
 │       ├── __init__.py         # Public exports search engine
 │       ├── graph.py            # Model graf formal (X, A, T, G, C) & heuristik
-│       └── scheduler.py        # Implementasi A* Search & Uniform Cost Search
+│       ├── scheduler.py        # Implementasi A* Search & Uniform Cost Search
+│       └── solver.py           # AC-3, backtracking, MRV, LCV, forward checking
 └── tests/
-    └── test_scheduler.py       # Test suite pytest (A*, UCS, admissibility, edge cases)
+    ├── test_scheduler.py       # Test A*, UCS, admissibility, edge cases
+    └── test_solver.py          # Test CSP, SOP akademik, dan brute-force oracle
 ```
 
 ---
@@ -184,75 +188,23 @@ uv run pytest
 ## 8. Contoh Output Eksekusi
 
 ```text
-================================================================================
-       DEL-ACADEMIC NAVIGATOR: ENTERPRISE AI COPILOT KAMPUS IT DEL
- Layanan Penjadwalan Ulang Kuliah (Make-up Class) & Bimbingan Akademik Terpadu
-================================================================================
-
-[SKENARIO 1: PENJADWALAN ULANG KULIAH (MAKE-UP CLASS)]
-• Mata Kuliah : 10S3001 - Kecerdasan Buatan (+P)
-• Dosen Pengampu: Samuel Indra Gunawan Situmeang
-• Peserta       : Kelas 31SI1 & 31SI2 (Total: 65 Mahasiswa)
-• Kasus         : Terjadi bentrok jadwal darurat pada slot Selasa 10:00 (GD512).
-• Regulasi SOP  : Pengajuan minimal H-2; Kelas > 40 mhs wajib di GD721/GD722.
-
-Mencari alur jadwal terbaik dari 'Start_Slot' ke 'Jumat_08:00_GD722'...
-
---------------------------------------------------------------------------------
-Metrik Perbandingan            | A* Search              | Uniform Cost Search (UCS)
---------------------------------------------------------------------------------
-Jalur Terpilih                 | Start_Slot -> Rabu_08:00_GD512 -> Jumat_08:00_GD722 | Start_Slot -> Rabu_08:00_GD512 -> Jumat_08:00_GD722
-Total Biaya Penalti (Cost)     | 20.00                  | 20.00                 
-Simpul Dieksplorasi (Nodes)    | 6                      | 6                     
-Waktu Komputasi                | 0.015 ms               | 0.005 ms              
---------------------------------------------------------------------------------
-
-[ANALISIS KEPUTUSAN AI COPILOT]
-[OK] Jalur Rekomendasi : Start_Slot -> Rabu_08:00_GD512 -> Jumat_08:00_GD722
-[OK] Total Penalti     : 20.0 (Minimum / Solusi Optimal)
-[OK] Validasi SOP Del  : Memenuhi syarat minimal H-2 (dilaksanakan Kamis/Jumat).
-[OK] Validasi Fasilitas: Menggunakan GD721 (kapasitas 80) dan GD722 (kapasitas 75)
-                      sehingga 65 mahasiswa tertampung dengan aman.
-[OK] Efisiensi A*      : Heuristik h(n) memandu pencarian secara admissible,
-                      mengeksplorasi 6 node (<= UCS: 6 node).
-
-================================================================================
-[SKENARIO 2: ALOKASI SESI BIMBINGAN AKADEMIK (DOSEN PA)]
-• Layanan       : Konsultasi Persetujuan KRS & Evaluasi Indeks Prestasi
-• Dosen PA      : Dosen Wali Sarjana Sistem Informasi
-• Batasan SOP   : Maksimal kuota 5 mahasiswa per sesi bimbingan.
-================================================================================
-Jalur Slot Bimbingan Terpilih : Antrean_Mhs -> Sesi_1_Senin_09:00
-Biaya Penalti Konsultasi      : 1.5
-Status SOP IT Del             : Memenuhi kuota 5 mhs/sesi di Ruang Dosen 911.
-
-================================================================================
-[SKENARIO 3: RESOLUSI BENTROK JADWAL MULTI-MATA KULIAH (GOAL: CONFLICT_COUNT == 0)]
-• Deskripsi Kasus : Mahasiswa kelas 31SI1 mengambil 2 matakuliah yang bentrok di slot awal.
-• Mata Kuliah A   : 10S3001 - Kecerdasan Buatan (Dosen: Samuel Situmeang)
-• Mata Kuliah B   : 10S3002 - Basis Data Lanjut (Dosen: Tim Pengampu BD)
-• Kondisi Awal    : Keduanya terjadwal di Senin 10:00 (GD512) -> Bentrok Mahasiswa & Ruang!
-================================================================================
-Jumlah Konflik Awal (Initial State) : 2 bentrok
-  [!] Bentrok Ruang GD512 antara 10S3001 & 10S3002 pada Senin 10:00
-  [!] Bentrok Mahasiswa (31SI1) antara 10S3001 & 10S3002 pada Senin 10:00
-
-[HASIL RESOLUSI A* SEARCH]
-Jumlah Konflik Akhir (Goal State)   : 0 bentrok (Goal Test: True)
-Total Biaya Penalti Perubahan (Cost): 3.00
-Simpul Ruang Keadaan Dieksplorasi  : 2 node
-Aksi Perubahan Jadwal:
-  -> Pindahkan 10S3002 -> Senin 13:00 (GD512)
-Alokasi Akhir Bebas Bentrok:
-  * 10S3001: Senin 10:00 di GD512 (Kapasitas: 40)
-  * 10S3002: Senin 13:00 di GD512 (Kapasitas: 40)
-
-================================================================================
-Milestone 1 Terpenuhi: State Space Search teruji bebas bug & siap untuk Milestone 2.
-================================================================================
+[SKENARIO 4: CSP PENJADWALAN AKADEMIK (AC-3 + BACKTRACKING)]
+  10S3001: Rabu 10:00, GD722 (kapasitas 75)
+  10S3002: Selasa 08:00, GD721 (kapasitas 80)
+  10S3003: Selasa 10:00, GD911 (kapasitas 60)
+[OK] Jadwal layak; nodes=3, backtracks=0, prunings=1, time=<aktual>
 ```
 
 ---
+
+## Milestone 2 — Constraint Satisfaction Solver
+
+Penjadwalan kuliah pengganti juga dimodelkan sebagai CSP dengan AC-3 dan
+backtracking. Jalankan `uv run python src/main.py` untuk melihat demonstrasi
+alokasi berdasarkan SOP (H-2, kapasitas/ruang besar, jam operasional, makan
+siang, dan kebutuhan lab), serta `uv run pytest` untuk pengujian. Penjelasan
+formulasi formal, kompleksitas, evaluasi konvergensi, dan pemetaan ke rubrik ada
+di [dokumen serahan Milestone 2](docs/T02_Milestone2_CSP_Solver.md).
 
 ## 9. Lisensi & Hak Cipta
 
