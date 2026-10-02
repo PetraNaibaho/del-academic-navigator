@@ -6,8 +6,29 @@ Milestone 2 - Del-Academic Navigator.
 # Test suite compatible with standard python runner
 
 from itertools import product
+from contextlib import contextmanager
 
-import pytest
+try:
+    import pytest
+except ImportError:
+    pytest = None
+
+
+@contextmanager
+def assert_raises(exc_type, match=None):
+    if pytest is not None:
+        with pytest.raises(exc_type, match=match):
+            yield
+    else:
+        try:
+            yield
+        except exc_type as e:
+            if match and match not in str(e):
+                raise AssertionError(f"Expected match '{match}' in '{str(e)}'") from e
+            return
+        except Exception as e:
+            raise AssertionError(f"Expected {exc_type.__name__}, got {type(e).__name__}") from e
+        raise AssertionError(f"Expected {exc_type.__name__} was not raised")
 
 from src.search.solver import CSPSolver, BinaryConstraint
 from src.del_academic_navigator.csp_schedule import (
@@ -201,17 +222,17 @@ def test_solver_matches_brute_force_for_all_three_variable_binary_csps():
 
 
 def test_solver_rejects_invalid_variable_and_constraint_references():
-    with pytest.raises(ValueError, match="unique"):
+    with assert_raises(ValueError, match="unique"):
         CSPSolver(["A", "A"], {"A": [1]})
-    with pytest.raises(ValueError, match="Domain keys"):
+    with assert_raises(ValueError, match="Domain keys"):
         CSPSolver(["A", "B"], {"A": [1]})
-    with pytest.raises(TypeError, match="callable"):
+    with assert_raises(TypeError, match="callable"):
         BinaryConstraint("A", "B", None)
 
     solver = CSPSolver(["A"], {"A": [1]})
-    with pytest.raises(ValueError, match="unknown variables"):
+    with assert_raises(ValueError, match="unknown variables"):
         solver.add_constraint(BinaryConstraint("A", "B", lambda a, b: True))
-    with pytest.raises(ValueError, match="distinct variables"):
+    with assert_raises(ValueError, match="distinct variables"):
         solver.add_constraint(BinaryConstraint("A", "A", lambda a, b: True))
 
 
@@ -294,7 +315,7 @@ def test_business_scheduler_reports_unsatisfiable_room_and_resource_conflicts():
 
 
 def test_business_scheduler_rejects_room_capacity_not_in_master_data():
-    with pytest.raises(ValueError, match="room master"):
+    with assert_raises(ValueError, match="room master"):
         build_academic_schedule_csp(
             [ScheduleCourse("A", "Dosen A", ("31SI1",), 30)],
             [ScheduleSlot("Selasa", 8, 2, "GD721", 100)],
