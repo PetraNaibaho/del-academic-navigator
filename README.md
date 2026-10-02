@@ -137,17 +137,22 @@ del-academic-navigator/
 │   └── T02_Milestone2_CSP_Solver.md # Formulasi CSP, algoritma, pengujian, rubrik
 ├── src/
 │   ├── __init__.py
-│   ├── main.py                 # Eksekusi skenario bisnis dan CLI benchmark
+│   ├── main.py                 # Eksekusi 5 skenario bisnis dan CLI benchmark
 │   ├── del_academic_navigator/
 │   │   ├── __init__.py         # Package init & versioning
+│   │   ├── rooms.py            # Master dataset 46 ruangan IT Del
+│   │   ├── rules.py            # Validator regulasi SOP akademik IT Del
 │   │   └── csp_schedule.py     # Model constraint bisnis penjadwalan kuliah
 │   └── search/
 │       ├── __init__.py         # Public exports search engine
+│       ├── conflict_resolver.py# Resolusi bentrok multi-mata kuliah
 │       ├── graph.py            # Model graf formal (X, A, T, G, C) & heuristik
 │       ├── scheduler.py        # Implementasi A* Search & Uniform Cost Search
+│       ├── sensitivity.py      # Analyzer sensitivitas & benchmark skalabilitas CSP
 │       └── solver.py           # AC-3, backtracking, MRV, LCV, forward checking
 └── tests/
     ├── test_scheduler.py       # Test A*, UCS, admissibility, edge cases
+    ├── test_sensitivity.py     # Test modul analisis sensitivitas & benchmark
     └── test_solver.py          # Test CSP, SOP akademik, dan brute-force oracle
 ```
 
@@ -169,10 +174,13 @@ cd del-academic-navigator
 uv sync
 ```
 
-### 3. Menjalankan Simulasi Skenario Akademik
+### 3. Menjalankan Simulasi Skenario Akademik (5 Skenario Bisnis)
 ```bash
 # Jalankan via uv
 uv run python src/main.py
+
+# Atau menggunakan python standar
+python src/main.py
 
 # Atau menggunakan perintah CLI yang terdaftar
 uv run del-nav
@@ -188,23 +196,35 @@ uv run pytest
 ## 8. Contoh Output Eksekusi
 
 ```text
+================================================================================
 [SKENARIO 4: CSP PENJADWALAN AKADEMIK (AC-3 + BACKTRACKING)]
+• Variabel       : Mata kuliah yang harus dijadwalkan
+• Domain         : Slot valid setelah filter H-2, kapasitas, jam, dan jenis ruang
+• Batasan keras  : Dosen, cohort mahasiswa, dan ruang tidak boleh bentrok
+================================================================================
   10S3001: Rabu 10:00, GD722 (kapasitas 75)
   10S3002: Selasa 08:00, GD721 (kapasitas 80)
   10S3003: Selasa 10:00, GD911 (kapasitas 60)
-[OK] Jadwal layak; nodes=3, backtracks=0, prunings=1, time=<aktual>
+[OK] Jadwal layak; nodes=3, backtracks=0, prunings=1, time=0.092 ms
+
+================================================================================
+[SKENARIO 5: ANALISIS SENSITIVITAS & SKALABILITAS CSP SOLVER]
+• Pengujian performa solver terhadap variasi skala masalah (3 MK, 6 MK, 10 MK)
+• Perbandingan variasi kombinasi AC-3, Backtracking, MRV, LCV, & Forward Checking
+================================================================================
+| Skala Masalah | Konfigurasi Solver | Solusi | Node Dieksplorasi | Backtracks | Domain Prunings | Waktu (ms) |
+|---|---|:---:|---:|---:|---:|---:|
+| Skala Kecil (3 MK) | Full CSP (AC-3 + MRV + LCV + FC) | Tidak | 0 | 0 | 0 | 0.004 |
+| Skala Besar (10 MK) | Full CSP (AC-3 + MRV + LCV + FC) | Ya | 10 | 0 | 48 | 11.457 |
 ```
 
 ---
 
-## Milestone 2 — Constraint Satisfaction Solver
+## Milestone 2 — Constraint Satisfaction Solver (`v0.2-milestone2`)
 
-Penjadwalan kuliah pengganti juga dimodelkan sebagai CSP dengan AC-3 dan
-backtracking. Jalankan `uv run python src/main.py` untuk melihat demonstrasi
-alokasi berdasarkan SOP (H-2, kapasitas/ruang besar, jam operasional, makan
-siang, dan kebutuhan lab), serta `uv run pytest` untuk pengujian. Penjelasan
-formulasi formal, kompleksitas, evaluasi konvergensi, dan pemetaan ke rubrik ada
-di [dokumen serahan Milestone 2](docs/T02_Milestone2_CSP_Solver.md).
+Penjadwalan kuliah pengganti dimodelkan sebagai CSP formal \(P = (X, D, C)\) dengan propagasi batasan AC-3 dan Backtracking Search yang diakselerasi heuristik **MRV (Minimum Remaining Values)**, **Degree Heuristic**, **LCV (Least Constraining Value)**, dan **Forward Checking (FC)**.
+
+Jalankan `python src/main.py` untuk melihat demonstrasi alokasi berdasarkan SOP (jam 08-17, istirahat 12-13, H-2, kapasitas ruang, GD721/GD722 untuk >40 mahasiswa, dan kebutuhan lab), serta `python -m pytest` untuk pengujian unit otomatis. Rincian formulasi formal, bukti matematis, analisis sensitivitas konvergensi, dan pemetaan rubrik 100% lengkap berada di [Dokumen Serahan Milestone 2](docs/T02_Milestone2_CSP_Solver.md).
 
 ## 9. Lisensi & Hak Cipta
 

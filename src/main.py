@@ -203,12 +203,29 @@ def run_csp_scheduling_scenario():
     )
 
 
+from src.search.sensitivity import CSPSensitivityAnalyzer
+
+
+def run_sensitivity_analysis_scenario():
+    print("\n" + "=" * 80)
+    print("[SKENARIO 5: ANALISIS SENSITIVITAS & SKALABILITAS CSP SOLVER]")
+    print("• Pengujian performa solver terhadap variasi skala masalah (3 MK, 6 MK, 10 MK)")
+    print("• Perbandingan variasi kombinasi AC-3, Backtracking, MRV, LCV, & Forward Checking")
+    print("=" * 80)
+
+    analyzer = CSPSensitivityAnalyzer()
+    metrics = analyzer.run_full_benchmark()
+    print(analyzer.format_markdown_table(metrics))
+    print("\n[OK] Analisis sensitivitas dan efisiensi propagasi AC-3 + FC selesai didemonstrasikan.")
+
+
 def main():
     print_banner()
     run_makeup_class_scenario()
     run_advising_session_scenario()
     run_conflict_resolution_scenario()
     run_csp_scheduling_scenario()
+    run_sensitivity_analysis_scenario()
     print("=" * 80)
     print("Milestone 1 & 2: State-Space Search dan CSP telah didemonstrasikan.")
     print("=" * 80)

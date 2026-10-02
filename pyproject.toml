@@ -1,6 +1,6 @@
 [project]
 name = "del-academic-navigator"
-version = "0.1.0"
+version = "0.2.0"
 description = "Enterprise AI Copilot untuk Layanan Bimbingan Akademik dan Penjadwalan Ulang Kuliah Kampus Institut Teknologi Del"
 readme = "README.md"
 requires-python = ">=3.11"
