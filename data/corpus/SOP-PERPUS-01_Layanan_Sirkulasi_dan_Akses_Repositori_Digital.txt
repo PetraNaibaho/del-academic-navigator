@@ -1,0 +1,21 @@
+STANDAR OPERASIONAL PROSEDUR LAYANAN SIRKULASI KOLEKSI FISIK DAN REPOSITORI DIGITAL PERPUSTAKAAN
+Nomor Dokumen: SOP-PERPUS-01-ITDEL-2026
+Tahun Terbit: 2026
+Penerbit: Unit Pelaksana Teknis (UPT) Perpustakaan Institut Teknologi Del
+Pernyataan Etika: Dokumen contoh akademik fiktif untuk evaluasi RAG (UU PDP No. 27/2022).
+
+1. JAM OPERASIONAL PERPUSTAKAAN
+- Hari Senin s.d. Jumat: Pukul 08.00 - 17.00 WIB (Buka Layanan Penuh).
+- Hari Sabtu: Pukul 08.30 - 13.00 WIB (Layanan Sirkulasi Terbatas).
+- Hari Minggu dan Hari Libur Nasional: Tutup.
+
+2. ATURAN PEMINJAMAN DAN PERPANJANGAN BUKU CETAK
+- Mahasiswa aktif berhak meminjam paling banyak 3 (tiga) judul buku cetak dalam satu waktu peminjaman.
+- Durasi peminjaman standar adalah 14 (empat belas) hari kalender.
+- Peminjaman dapat diperpanjang sebanyak 1 (satu) kali perpanjangan selama 7 hari tambahan, dengan syarat buku tersebut tidak sedang dipesan (hold/reserved) oleh civitas lain.
+- Keterlambatan pengembalian buku dikenakan denda administratif sebesar Rp 2.000 (dua ribu rupiah) per buku per hari keterlambatan.
+
+3. AKSES REPOSITORI DIGITAL DAN TUGAS AKHIR
+- Civitas akademika berhak mengakses koleksi e-journal internasional (IEEE Xplore, ScienceDirect, ACM Digital Library) melalui jaringan kampus atau remote access SSO.
+- Naskah Tugas Akhir dan Tesis dalam Repositori Digital IT Del dilindungi oleh hak cipta institusi. Pengguna hanya diizinkan membaca bab pendahuluan dan abstrak secara publik; naskah lengkap hanya dapat diakses untuk kepentingan riset internal kampus.
+- Mahasiswa tingkat akhir wajib menyerahkan salinan digital final naskah tugas akhir yang telah ditandatangani lengkap sebagai syarat penerbitan Surat Bebas Pustaka untuk yudisium.

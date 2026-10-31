@@ -1,0 +1,202 @@
+[
+  {
+    "query_id": "Q01",
+    "category": "synonym_non_literal",
+    "query": "Kapan batas waktu paling telat mengabari sebelum melangsungkan kelas pengganti?",
+    "target_doc_id": "SOP-AKD-01",
+    "expected_intent": "Aturan pengajuan kuliah pengganti minimal H-2",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q02",
+    "category": "synonym_non_literal",
+    "query": "Berapa kapasitas rombongan mahasiswa yang wajib dialokasikan di gedung tujuh?",
+    "target_doc_id": "SOP-AKD-01",
+    "expected_intent": "Kelas paralel > 40 mahasiswa wajib di GD721/GD722",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q03",
+    "category": "synonym_non_literal",
+    "query": "Berapa banyak anak didik yang diizinkan berkonsultasi dalam satu kali temu dengan dosen wali?",
+    "target_doc_id": "SOP-AKD-02",
+    "expected_intent": "Kuota bimbingan PA maksimal 5 mahasiswa per sesi",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q04",
+    "category": "synonym_non_literal",
+    "query": "Kapan saja waktu pertemuan wajib mahasiswa dan dosen pembimbing sepanjang semester?",
+    "target_doc_id": "SOP-AKD-02",
+    "expected_intent": "Frekuensi bimbingan PA minimal 3 kali (awal, tengah UTS, akhir UAS)",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q05",
+    "category": "synonym_non_literal",
+    "query": "Apakah diperbolehkan membawa santapan atau minuman manis ke ruangan komputer?",
+    "target_doc_id": "SOP-LAB-01",
+    "expected_intent": "Larangan makanan dan minuman di laboratorium komputer",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q06",
+    "category": "synonym_non_literal",
+    "query": "Jam berapa pemadaman aliran lampu kamar dan penutupan gerbang asrama pada malam hari?",
+    "target_doc_id": "SOP-KMS-01",
+    "expected_intent": "Jam malam gerbang 22:00 dan pemadaman lampu 23:00",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q07",
+    "category": "synonym_non_literal",
+    "query": "Berapa lama seorang sarjana diizinkan rehat sementara dari perkuliahan?",
+    "target_doc_id": "SOP-BAAK-01",
+    "expected_intent": "Cuti akademik maksimal 2 semester berturut-turut",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q08",
+    "category": "synonym_non_literal",
+    "query": "Berapa kredit nilai minimal yang harus diluluskan agar tidak dikeluarkan dari kampus pada akhir tahun kedua?",
+    "target_doc_id": "SOP-BAAK-02",
+    "expected_intent": "Evaluasi Tahap II semester 4 minimal 48 SKS lulus dan IPK 2.00",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q09",
+    "category": "synonym_non_literal",
+    "query": "Berapa batas persentase plagiasi Turnitin agar karya akhir dapat diajukan ke yudisium?",
+    "target_doc_id": "SOP-FITE-01",
+    "expected_intent": "Uji similaritas Turnitin tugas akhir maksimal 20 persen",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q10",
+    "category": "synonym_non_literal",
+    "query": "Berapa denda harian bila saya terlambat memulangkan pinjaman buku cetak?",
+    "target_doc_id": "SOP-PERPUS-01",
+    "expected_intent": "Denda keterlambatan buku perpustakaan Rp 2.000 per hari",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q11",
+    "category": "literal_baseline",
+    "query": "SOP pengajuan H-2 perkuliahan pengganti make-up class",
+    "target_doc_id": "SOP-AKD-01",
+    "expected_intent": "Pengajuan make-up class minimal H-2",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q12",
+    "category": "literal_baseline",
+    "query": "Kuota konsultasi maksimal 5 mahasiswa per sesi bimbingan dosen PA",
+    "target_doc_id": "SOP-AKD-02",
+    "expected_intent": "Kuota bimbingan PA maksimal 5 orang",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q13",
+    "category": "literal_baseline",
+    "query": "Laboratorium GD911 workstation GPU dan kartu grafis",
+    "target_doc_id": "SOP-LAB-01",
+    "expected_intent": "Fasilitas lab komputer GD911",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q14",
+    "category": "literal_baseline",
+    "query": "Jam belajar mandiri wajib compulsory study time asrama 19:30",
+    "target_doc_id": "SOP-KMS-01",
+    "expected_intent": "Study time asrama 19:30 - 22:00",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q15",
+    "category": "literal_baseline",
+    "query": "Syarat indeks prestasi kumulatif beasiswa prestasi akademik 3.50",
+    "target_doc_id": "SOP-KMS-02",
+    "expected_intent": "Syarat IPK beasiswa prestasi 3.50",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q16",
+    "category": "ambiguous",
+    "query": "Berapa batas maksimalnya?",
+    "target_doc_id": "SOP-AKD-02",
+    "expected_intent": "Pertanyaan ambigu tentang batas kuota/durasi",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q17",
+    "category": "ambiguous",
+    "query": "Bagaimana prosedur permohonan resminya?",
+    "target_doc_id": "SOP-BAAK-01",
+    "expected_intent": "Pertanyaan ambigu tentang alur pengajuan",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q18",
+    "category": "ambiguous",
+    "query": "Sanksi pelanggaran kedisiplinan dan hukuman",
+    "target_doc_id": "REG-AKD-01",
+    "expected_intent": "Pertanyaan ambigu tentang sanksi pelanggaran",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q19",
+    "category": "out_of_domain",
+    "query": "Resep dan bumbu cara memasak saksang babi khas Toba yang lezat",
+    "target_doc_id": "NONE",
+    "expected_intent": "Kuliner / Makanan di luar domain akademik IT Del",
+    "is_in_domain": false
+  },
+  {
+    "query_id": "Q20",
+    "category": "out_of_domain",
+    "query": "Bagaimana prakiraan cuaca dan suhu di Danau Toba besok pagi?",
+    "target_doc_id": "NONE",
+    "expected_intent": "Meteorologi / Cuaca di luar domain IT Del",
+    "is_in_domain": false
+  },
+  {
+    "query_id": "Q21",
+    "category": "out_of_domain",
+    "query": "Siapa pencetak gol terbanyak di final Liga Champions 2026?",
+    "target_doc_id": "NONE",
+    "expected_intent": "Sepak bola / Olahraga internasional",
+    "is_in_domain": false
+  },
+  {
+    "query_id": "Q22",
+    "category": "out_of_domain",
+    "query": "Panduan cara mengganti oli mesin sepeda motor Honda Vario 160",
+    "target_doc_id": "NONE",
+    "expected_intent": "Mekanik otomotif di luar domain kampus",
+    "is_in_domain": false
+  },
+  {
+    "query_id": "Q23",
+    "category": "out_of_domain",
+    "query": "Rekomendasi hotel bintang lima murah di pinggir pantai Kuta Bali",
+    "target_doc_id": "NONE",
+    "expected_intent": "Pariwisata / Perjalanan wisata luar pulau",
+    "is_in_domain": false
+  },
+  {
+    "query_id": "Q24",
+    "category": "mixed_typo",
+    "query": "jadual penganti dosen sakiit minimal h minus brp yach",
+    "target_doc_id": "SOP-AKD-01",
+    "expected_intent": "Jadwal pengganti minimal H-2 dengan typo/bahasa gaul",
+    "is_in_domain": true
+  },
+  {
+    "query_id": "Q25",
+    "category": "mixed_typo",
+    "query": "surat ijin sakit dr klinik del utk dispensasii absensii",
+    "target_doc_id": "SOP-KMS-03",
+    "expected_intent": "Surat keterangan sakit klinik kampus untuk absensi",
+    "is_in_domain": true
+  }
+]

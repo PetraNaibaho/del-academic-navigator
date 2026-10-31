@@ -1,0 +1,26 @@
+query_id,category,query,target_doc_id,expected_intent,is_in_domain
+Q01,synonym_non_literal,Kapan batas waktu paling telat mengabari sebelum melangsungkan kelas pengganti?,SOP-AKD-01,Aturan pengajuan kuliah pengganti minimal H-2,True
+Q02,synonym_non_literal,Berapa kapasitas rombongan mahasiswa yang wajib dialokasikan di gedung tujuh?,SOP-AKD-01,Kelas paralel > 40 mahasiswa wajib di GD721/GD722,True
+Q03,synonym_non_literal,Berapa banyak anak didik yang diizinkan berkonsultasi dalam satu kali temu dengan dosen wali?,SOP-AKD-02,Kuota bimbingan PA maksimal 5 mahasiswa per sesi,True
+Q04,synonym_non_literal,Kapan saja waktu pertemuan wajib mahasiswa dan dosen pembimbing sepanjang semester?,SOP-AKD-02,"Frekuensi bimbingan PA minimal 3 kali (awal, tengah UTS, akhir UAS)",True
+Q05,synonym_non_literal,Apakah diperbolehkan membawa santapan atau minuman manis ke ruangan komputer?,SOP-LAB-01,Larangan makanan dan minuman di laboratorium komputer,True
+Q06,synonym_non_literal,Jam berapa pemadaman aliran lampu kamar dan penutupan gerbang asrama pada malam hari?,SOP-KMS-01,Jam malam gerbang 22:00 dan pemadaman lampu 23:00,True
+Q07,synonym_non_literal,Berapa lama seorang sarjana diizinkan rehat sementara dari perkuliahan?,SOP-BAAK-01,Cuti akademik maksimal 2 semester berturut-turut,True
+Q08,synonym_non_literal,Berapa kredit nilai minimal yang harus diluluskan agar tidak dikeluarkan dari kampus pada akhir tahun kedua?,SOP-BAAK-02,Evaluasi Tahap II semester 4 minimal 48 SKS lulus dan IPK 2.00,True
+Q09,synonym_non_literal,Berapa batas persentase plagiasi Turnitin agar karya akhir dapat diajukan ke yudisium?,SOP-FITE-01,Uji similaritas Turnitin tugas akhir maksimal 20 persen,True
+Q10,synonym_non_literal,Berapa denda harian bila saya terlambat memulangkan pinjaman buku cetak?,SOP-PERPUS-01,Denda keterlambatan buku perpustakaan Rp 2.000 per hari,True
+Q11,literal_baseline,SOP pengajuan H-2 perkuliahan pengganti make-up class,SOP-AKD-01,Pengajuan make-up class minimal H-2,True
+Q12,literal_baseline,Kuota konsultasi maksimal 5 mahasiswa per sesi bimbingan dosen PA,SOP-AKD-02,Kuota bimbingan PA maksimal 5 orang,True
+Q13,literal_baseline,Laboratorium GD911 workstation GPU dan kartu grafis,SOP-LAB-01,Fasilitas lab komputer GD911,True
+Q14,literal_baseline,Jam belajar mandiri wajib compulsory study time asrama 19:30,SOP-KMS-01,Study time asrama 19:30 - 22:00,True
+Q15,literal_baseline,Syarat indeks prestasi kumulatif beasiswa prestasi akademik 3.50,SOP-KMS-02,Syarat IPK beasiswa prestasi 3.50,True
+Q16,ambiguous,Berapa batas maksimalnya?,SOP-AKD-02,Pertanyaan ambigu tentang batas kuota/durasi,True
+Q17,ambiguous,Bagaimana prosedur permohonan resminya?,SOP-BAAK-01,Pertanyaan ambigu tentang alur pengajuan,True
+Q18,ambiguous,Sanksi pelanggaran kedisiplinan dan hukuman,REG-AKD-01,Pertanyaan ambigu tentang sanksi pelanggaran,True
+Q19,out_of_domain,Resep dan bumbu cara memasak saksang babi khas Toba yang lezat,NONE,Kuliner / Makanan di luar domain akademik IT Del,False
+Q20,out_of_domain,Bagaimana prakiraan cuaca dan suhu di Danau Toba besok pagi?,NONE,Meteorologi / Cuaca di luar domain IT Del,False
+Q21,out_of_domain,Siapa pencetak gol terbanyak di final Liga Champions 2026?,NONE,Sepak bola / Olahraga internasional,False
+Q22,out_of_domain,Panduan cara mengganti oli mesin sepeda motor Honda Vario 160,NONE,Mekanik otomotif di luar domain kampus,False
+Q23,out_of_domain,Rekomendasi hotel bintang lima murah di pinggir pantai Kuta Bali,NONE,Pariwisata / Perjalanan wisata luar pulau,False
+Q24,mixed_typo,jadual penganti dosen sakiit minimal h minus brp yach,SOP-AKD-01,Jadwal pengganti minimal H-2 dengan typo/bahasa gaul,True
+Q25,mixed_typo,surat ijin sakit dr klinik del utk dispensasii absensii,SOP-KMS-03,Surat keterangan sakit klinik kampus untuk absensi,True

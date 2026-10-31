@@ -1,0 +1,20 @@
+STANDAR OPERASIONAL PROSEDUR KEBIJAKAN PENGGUNAAN JARINGAN INTERNET, AKUN SSO, DAN KEAMANAN SIBER
+Nomor Dokumen: SOP-TI-01-ITDEL-2026
+Berlaku: Tahun Akademik Gasal 2026/2027
+Unit Penerbit: Direktorat Teknologi Informasi dan Komunikasi (DTIK) IT Del
+Kepatuhan Regulasi: Simulasi operasional fiktif, selaras UU PDP No. 27/2022 dan SE Menkominfo No. 9/2023.
+
+PASAL 1: IDENTITAS DIGITAL DAN AKUN SINGLE SIGN-ON (SSO)
+1. Setiap mahasiswa dan staf resmi IT Del memperoleh akun Single Sign-On (SSO) dengan domain resmi @del.ac.id.
+2. Kata sandi akun SSO wajib memiliki kompleksitas minimal 12 karakter yang memadukan huruf kapital, huruf kecil, angka, dan simbol khusus.
+3. Pengguna dilarang membagikan kredensial akun kepada pihak lain mana pun. Segala aktivitas yang tercatat atas nama akun pengguna menjadi tanggung jawab hukum pemilik akun.
+
+PASAL 2: PENGGUNAAN JARINGAN KAMPUS (DEL-WIFI & ETHERNET)
+1. Jaringan internet kampus diutamakan untuk kepentingan proses belajar-mengajar, riset kecerdasan buatan, dan komunikasi kedinasan.
+2. Setiap pengguna dibatasi kuota alokasi bandwidth wajar (Fair Usage Policy - FUP) sebesar 20 GB per hari.
+3. Koneksi VPN pihak ketiga tanpa otorisasi DTIK dilarang di lingkungan jaringan intranet kampus.
+
+PASAL 3: AKTIVITAS YANG DILARANG KERAS DAN SANKSI
+1. Pengguna dilarang mengunduh atau menyebarkan konten bermuatan pornografi, perjudian daring, ujaran kebencian, atau konten bajakan hak cipta.
+2. Dilarang menggunakan jaringan kampus untuk lalu lintas Peer-to-Peer (BitTorrent), penyerangan denial-of-service (DoS), pemindaian port jaringan, atau penambangan mata uang kripto (cryptocurrency mining).
+3. Pelanggaran terhadap pasal ini berakibat pemblokiran MAC address perangkat, pencabutan akun SSO, dan pelaporan tindak pidana siber sesuai UU ITE yang berlaku di Republik Indonesia.

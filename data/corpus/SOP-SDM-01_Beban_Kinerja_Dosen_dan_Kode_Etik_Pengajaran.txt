@@ -1,0 +1,21 @@
+STANDAR OPERASIONAL PROSEDUR BEBAN KERJA DOSEN (BKD) DAN KODE ETIK PENGAJARAN
+Nomor Dokumen: SOP-SDM-01-ITDEL-2026
+Berlaku: Tahun Ajaran Gasal 2026/2027
+Penerbit: Direktorat Sumber Daya Manusia dan Bagian Penjaminan Mutu IT Del
+Kepatuhan Etika: Dokumen simulasi enterprise AI, tanpa data pribadi dosen riil (UU No. 27/2022).
+
+1. DISTRIBUSI BEBAN KERJA DOSEN (BKD)
+Sesuai standar pendidikan tinggi nasional dan penjaminan mutu IT Del:
+- Setiap dosen tetap wajib menjalankan Tridharma Perguruan Tinggi dengan beban ekuivalen 12 hingga 16 SKS per semester.
+- Alokasi beban pengajaran di kelas minimal 6 SKS dan maksimal 10 SKS untuk mempertahankan kualitas interaksi pedagogis.
+- Beban penelitian dan pengabdian kepada masyarakat wajib dialokasikan minimal 3 SKS per semester.
+
+2. KEWAJIBAN PERKULIAHAN DAN KEHADIRAN
+- Dosen pengampu wajib memenuhi minimal 14 (empat belas) kali tatap muka perkuliahan terstruktur dalam satu semester, tidak termasuk pelaksanaan UTS dan UAS.
+- Kehadiran dosen di kelas wajib tepat waktu sesuai jam yang tertera pada jadwal perkuliahan SIA.
+- Apabila berhalangan hadir karena tugas kedinasan atau sakit, dosen wajib memberi tahu koordinator prodi dan mengajukan permohonan kelas pengganti minimal H-2 sesuai SOP-AKD-01.
+
+3. KODE ETIK EVALUASI DAN NILAI
+- Dosen wajib mengumumkan silabus, rencana pembelajaran semester (RPS), dan bobot penilaian pada minggu pertama perkuliahan.
+- Nilai Ujian Tengah Semester (UTS) dan Ujian Akhir Semester (UAS) wajib diinput ke portal SIA IT Del selambat-lambatnya 7 (tujuh) hari kerja setelah ujian mata kuliah bersangkutan diselenggarakan.
+- Dosen dilarang mengubah nilai akhir mahasiswa di luar mekanisme komplain nilai resmi yang diawasi oleh tim penjaminan mutu fakultas.
