@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ChromaDB Persistent Vector Store & Benchmark Ablation Directories
+data/chroma_db/
+data/chroma_comp_*/
+data/temp_ablation_*/
+reports/.mpl/
+.cache/
+hf_cache/
